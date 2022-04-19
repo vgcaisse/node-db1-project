@@ -1,5 +1,5 @@
 const Account =  require('./accounts-model')
-
+const db = require('../../data/db-config')
 const checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
   // Note: you can either write "manual" validation logic
@@ -28,9 +28,19 @@ const checkAccountPayload = (req, res, next) => {
   }
 }
 
-const checkAccountNameUnique = (req, res, next) => {
+const checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
-  next()
+  try {
+    const existing = await db('accounts') 
+      .where('name', req.body.name.trim())
+      .first()
+
+      if(existing) {
+        next({ status: 400, message: `that name is taken` })
+      }
+  } catch (err) {
+    next(err)
+  }
 }
 
 const checkAccountId = (req, res, next) => {
