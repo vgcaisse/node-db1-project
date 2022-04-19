@@ -2,7 +2,9 @@ const router = require('express').Router()
 
 router.get('/', (req, res, next) => {
   // DO YOUR MAGIC
-  heres the test to see if anth-anfasfs
+  // throw new Error('deez')
+  // res.json([{},{}])
+  
 })
 
 router.get('/:id', (req, res, next) => {
@@ -23,6 +25,9 @@ router.delete('/:id', (req, res, next) => {
 
 router.use((err, req, res, next) => { // eslint-disable-line
   // DO YOUR MAGIC
+  res.status(err.status || 500).json({
+    message: err.message
+  })
 })
 
 module.exports = router;
