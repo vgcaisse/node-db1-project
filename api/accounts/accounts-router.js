@@ -30,7 +30,6 @@ router.get('/:id', checkAccountId, (req, res, next) => {
   //   .catch(err => {
   //     next(err)
   //   }) 
-  
   res.json(req.accounts)
 })
 
