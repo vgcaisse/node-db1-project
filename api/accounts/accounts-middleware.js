@@ -48,7 +48,7 @@ const checkAccountId = (req, res, next) => {
   Account.getById(req.params.id)
     .then(accounts => {
       if(!accounts) {
-        next({ status: 404, message: `imagine an office of monkeys losing their minds` })
+        next({ status: 404, message: `account not found` })
       } else {
         req.accounts = accounts
         next()
