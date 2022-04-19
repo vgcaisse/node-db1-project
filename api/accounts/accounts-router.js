@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const Account = require('./accounts-model')
 
 const {
   checkAccountPayload,
@@ -10,11 +11,24 @@ router.get('/', (req, res, next) => {
   // DO YOUR MAGIC
   // throw new Error('deez')
   // res.json([{},{}])
-
+  Account.getAll()
+    .then(accounts => {
+      res.json(accounts)
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 router.get('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
+  Account.getById(req.params.id)
+    .then(accounts => {
+      res.json(accounts)
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 router.post(
