@@ -48,7 +48,7 @@ router.post(
     //     next(err)
     //   })
     try {
-      const newAccount = await Account.create(req.body)
+      const newAccount = await Account.create(req.body.trim())
       res.status(201).json(newAccount)
     } catch (err) {
       next(err)
@@ -59,13 +59,24 @@ router.put(
   '/:id',
   checkAccountId,
   checkAccountPayload,
-  checkAccountNameUnique,
   (req, res, next) => {
     // DO YOUR MAGIC
+    Account.updateById(req.params.id, req.body)
+    .then(updatedAcc => {
+      res.json(updatedAcc);
+    })
+    .catch(next)
   });
 
 router.delete('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
+  Account.deleteById(req.params.id)
+    .then(()=> {
+      res.json()
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
