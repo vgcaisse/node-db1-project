@@ -37,6 +37,8 @@ const checkAccountNameUnique = async (req, res, next) => {
 
       if(existing) {
         next({ status: 400, message: `that name is taken` })
+      } else {
+        next()
       }
   } catch (err) {
     next(err)

@@ -37,22 +37,16 @@ router.post(
   '/',
   checkAccountPayload,
   checkAccountNameUnique,
-  async (req, res, next) => {
+  (req, res, next) => {
     // DO YOUR MAGIC
-
-    // Account.create(req.body)
-    //   .then(newAccount => {
-    //     res.status(201).json(newAccount)
-    //   })
-    //   .catch(err => {
-    //     next(err)
-    //   })
-    try {
-      const newAccount = await Account.create(req.body.trim())
-      res.status(201).json(newAccount)
-    } catch (err) {
-      next(err)
-    }
+    const { name, budget } = req.body
+    Account.create({ name: name.trim(), budget: budget})
+      .then(newAccount => {
+        res.status(201).json(newAccount)
+      })
+      .catch(err => {
+        next(err)
+      })
   })
 
 router.put(
@@ -62,17 +56,17 @@ router.put(
   (req, res, next) => {
     // DO YOUR MAGIC
     Account.updateById(req.params.id, req.body)
-    .then(updatedAcc => {
-      res.json(updatedAcc);
-    })
-    .catch(next)
+      .then(updatedAcc => {
+        res.status(200).json(updatedAcc);
+      })
+      .catch(next)
   });
 
 router.delete('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
   Account.deleteById(req.params.id)
-    .then(()=> {
-      res.json()
+    .then(() => {
+      res.json(`${req.accounts.name}'s account was deleted, the budget was: ${req.accounts.budget}$`)
     })
     .catch(err => {
       next(err)
