@@ -22,13 +22,16 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
-  Account.getById(req.params.id)
-    .then(accounts => {
-      res.json(accounts)
-    })
-    .catch(err => {
-      next(err)
-    })
+
+  // Account.getById(req.params.id)
+  //   .then(accounts => {
+  //     res.json(accounts)
+  //   })
+  //   .catch(err => {
+  //     next(err)
+  //   }) 
+  
+  res.json(req.accounts)
 })
 
 router.post(

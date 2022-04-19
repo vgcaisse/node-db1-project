@@ -1,3 +1,5 @@
+const Account =  require('./accounts-model')
+
 const checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
   // Note: you can either write "manual" validation logic
@@ -12,7 +14,18 @@ const checkAccountNameUnique = (req, res, next) => {
 
 const checkAccountId = (req, res, next) => {
   // DO YOUR MAGIC
-  next()
+  Account.getById(req.params.id)
+    .then(accounts => {
+      if(!accounts) {
+        next({ status: 404, message: `imagine an office of monkeys losing their minds` })
+      } else {
+        req.accounts = accounts
+        next()
+      }
+    })
+    .catch(err => {
+      next(err)
+    })
 }
 
 
