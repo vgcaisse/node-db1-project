@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 router.get('/', (req, res, next) => {
   // DO YOUR MAGIC
+  heres the test to see if anth-anfasfs
 })
 
 router.get('/:id', (req, res, next) => {
